@@ -1,0 +1,31 @@
+@import "general";
+
+.items {
+  padding: 10px;
+  font-size: 16px;
+  display: flex;
+  height: 36px;
+}
+
+.title {
+  font-weight: bold;
+  align-self: center;
+  width: 170px;
+}
+
+.value {
+  align-self: center;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit-input {
+  height: 20px;
+  font-size: 16px;
+  border: 0;
+  padding: 0 2px;
+  outline: 0;
+  border-radius: 1px;
+}

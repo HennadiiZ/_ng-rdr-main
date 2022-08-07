@@ -1,0 +1,103 @@
+<div *ngIf="user" class="profile-container">
+  <div class="header">
+    <div>
+      <img
+        alt="User Avatar"
+        class="avatar"
+        src="https://upload.wikimedia.org/wikipedia/commons/6/67/User_Avatar.png"
+      />
+    </div>
+
+    <div class="title">
+      <div class="main-title">
+        {{ user?.firstname }} {{ user?.lastname }}
+        <span *ngIf="user.isAdmin || isNotCurrentUserProfile" class="user-id"> ({{ user.id }})</span>
+      </div>
+      <div class="subtitle">
+        <span *ngIf="user.isAdmin">Admin </span>
+        <span *ngIf="user.isMentor">Mentor </span>
+        <span *ngIf="user.isManager">Manager</span>
+      </div>
+    </div>
+
+<!--  EDIT BUTTON   <div class="actions">-->
+<!--      <button-->
+<!--        *ngIf="!editMode; else editBtn"-->
+<!--        class="dark-button"-->
+<!--        mat-raised-button>-->
+<!--        Edit-->
+<!--      </button>-->
+<!--      <ng-template #editBtn>-->
+<!--        <div class="form-buttons">-->
+<!--          <button-->
+<!--            [disabled]="profileForm.invalid || !profileForm.dirty"-->
+<!--            class="loading-button dark-button"-->
+<!--            mat-raised-button-->
+<!--            type="submit">-->
+<!--            <span [class.loading-button__text]="isLoading">Save</span>-->
+<!--            <div *ngIf="isLoading" class="loading-button__spinner">-->
+<!--              <mat-spinner-->
+<!--                color="accent"-->
+<!--                diameter="25"-->
+<!--                strokeWidth="3">-->
+<!--              </mat-spinner>-->
+<!--            </div>-->
+<!--          </button>-->
+<!--          <a (click)="editMode = !editMode"-->
+<!--             [disabled]="isLoading"-->
+<!--             class="light-button"-->
+<!--             mat-button>-->
+<!--            Cancel-->
+<!--          </a>-->
+<!--        </div>-->
+<!--      </ng-template>-->
+<!--    </div>-->
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="profile">
+    <div class="profile-fields">
+      <div class="profile-display-info">User information</div>
+      <ng-container *ngFor="let field of profileFields">
+        <div class="profile-field">
+          <div class="profile-field-title">{{ getFieldTitle(field) }}: </div>
+          <div class="profile-field-value">{{ user | userProfileValue:field }}</div>
+        </div>
+      </ng-container>
+      <ng-container *ngFor="let field of fieldsWithButtons">
+        <div class="profile-field">
+          <div class="profile-field-title">{{ getFieldTitle(field) }}:</div>
+          <div class="profile-field-value">
+            <button
+              class="dark-button"
+              (click)="setDisplayData(user, field)"
+              mat-raised-button>
+              <span *ngIf="displayTitle !== field">Show</span>
+              <span *ngIf="displayTitle === field">Hide</span>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="profile-display">
+      <ng-container *ngIf="displayTitle">
+        <div class="profile-display-title-container">
+          <span class="profile-display-title">{{ getFieldTitle(displayTitle) }}</span>
+          <button
+            *ngIf="displayData.data.length"
+            (click)="displayEditMode = !displayEditMode"
+            class="dark-button"
+            mat-raised-button>
+            Edit
+          </button>
+        </div>
+
+        <div class="profile-data">
+          <app-info-display [data]="displayData" [editMode]="displayEditMode"></app-info-display>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
